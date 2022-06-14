@@ -1,0 +1,54 @@
+package:
+  name: my-helm-package
+  version: 0.1.0
+  epoch: 0
+  description: "My Helm package"
+  target-architecture:
+    - all
+  copyright:
+    - paths:
+      - "*"
+      attestation: TODO
+      license: BSD-2-Clause
+  dependencies:
+    runtime:
+
+environment:
+  contents:
+    repositories:
+      - https://dl-cdn.alpinelinux.org/alpine/edge/main
+      - https://dl-cdn.alpinelinux.org/alpine/edge/community
+    packages:
+      - alpine-baselayout-data
+      - busybox
+      - ca-certificates-bundle
+      - openssl
+      - wget
+      # for building helm with go
+      - make
+      - git
+      - bash
+      - musl-dev
+      - go
+
+  accounts:
+    groups:
+      - groupname: nonroot
+        gid: 10000
+    users:
+      - username: nonroot
+        uid: 10000
+
+pipeline:
+  # build helm from source
+  - uses: fetch
+    with:
+      uri: https://github.com/helm/helm/archive/refs/tags/v3.9.0.tar.gz
+      expected-sha256: 4674aac1527db460bcbb6e0d0fa9677a4ce8b1ae7cc535a7a57c9c1778683cbe
+  
+  - name: 'build & install helm'
+    runs: |
+      GOROOT=/usr/lib/go make build
+      mkdir -p ${{targets.destdir}}/usr/bin/
+      mv bin/helm ${{targets.destdir}}/usr/bin
+      chmod +x ${{targets.destdir}}/usr/bin/helm
