@@ -6,6 +6,12 @@ An example of using [apko](https://github.com/chainguard-dev/apko)/[melange](htt
 - we can then use apko to install that local package.
 - we can do this for any arbitraty binary as well but it's not recommended if you want to do multi-arch build.
 
+You can try it by pulling the image and see for yourself
+
+```shell
+docker pull ghcr.io/tuananh/apko-helm-image-demo:latest
+```
+
 ## Goals
 
 - [x] Fully reproducible build.
