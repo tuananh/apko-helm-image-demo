@@ -9,7 +9,7 @@ An example of using [apko](https://github.com/chainguard-dev/apko)/[melange](htt
 ## Goals
 
 - [x] Fully reproducible build.
-- [-] Multi-arch support.
+- [ ] Multi-arch support.
 - [x] SBOM support.
 
 ## License
