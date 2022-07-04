@@ -43,7 +43,7 @@ jobs:
       - uses: chainguard-dev/actions/melange-build@main
         with:
           sign-with-temporary-key: true
-          archs: all
+          archs: x86_64,aarch64
           # empty-workspace: true
 
       - uses: chainguard-dev/actions/apko-build@main
