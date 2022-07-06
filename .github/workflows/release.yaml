@@ -61,5 +61,4 @@ jobs:
 
       - shell: bash
         run: |
-          # TODO: Add attributes based on things like the commit.
           COSIGN_EXPERIMENTAL=true cosign sign ${{ steps.apko.outputs.digest }}
