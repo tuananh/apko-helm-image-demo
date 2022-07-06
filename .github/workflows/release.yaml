@@ -46,7 +46,7 @@ jobs:
           archs: x86_64,aarch64
           empty-workspace: true
 
-      - uses: chainguard-dev/actions/apko-build@main
+      - uses: distroless/actions/apko-build@main
         id: apko
         with:
           tag: ghcr.io/${{ github.repository }}:latest

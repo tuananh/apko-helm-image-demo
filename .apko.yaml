@@ -13,8 +13,8 @@ entrypoint:
   command: /bin/sh
 
 archs:
-  - amd64
-  - arm64
+  - x86_64
+  - aarch64
 
 accounts:
   groups:
