@@ -15,7 +15,7 @@ docker pull ghcr.io/tuananh/apko-helm-image-demo:latest
 ## Goals
 
 - [x] Fully reproducible build.
-- [ ] Multi-arch support.
+- [x] Multi-arch support.
 - [x] SBOM support.
 
 ## License
