@@ -1,6 +1,7 @@
 contents:
   repositories:
     - https://dl-cdn.alpinelinux.org/alpine/edge/main
+    - https://dl-cdn.alpinelinux.org/alpine/edge/community
     - '@local /github/workspace/packages'
   packages:
     - alpine-baselayout-data
@@ -12,7 +13,8 @@ entrypoint:
   command: /bin/sh
 
 archs:
-  - amd64
+  - x86_64
+  - aarch64
 
 accounts:
   groups:

@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: '15 3 * * *'  # every day at 03:15 (just wanted to avoid midnight)
 
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
 jobs:
   build:
     name: Build container image
@@ -25,12 +29,24 @@ jobs:
         shell: bash
 
       - uses: actions/checkout@main
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        # with:
+        #   platforms: x86_64,arm64
+      
+      - name: Install qemu-user
+        run: sudo apt-get install -y qemu-user
+
       - uses: sigstore/cosign-installer@main
+      
       - uses: chainguard-dev/actions/melange-build@main
         with:
           sign-with-temporary-key: true
+          archs: x86_64,aarch64
+          empty-workspace: true
 
-      - uses: chainguard-dev/actions/apko-build@main
+      - uses: distroless/actions/apko-build@main
         id: apko
         with:
           tag: ghcr.io/${{ github.repository }}:latest
@@ -43,7 +59,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ github.token }}
 
-      - shell: bash
-        run: |
-          # TODO: Add attributes based on things like the commit.
-          COSIGN_EXPERIMENTAL=true cosign sign ${{ steps.apko.outputs.digest }}
+      # - shell: bash
+      #   run: |
+      #     COSIGN_EXPERIMENTAL=true cosign sign ${{ steps.apko.outputs.digest }}
